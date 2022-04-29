@@ -1,0 +1,62 @@
+{
+  "name": "fhp-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.4.3",
+    "@portis/web3": "^4.0.7",
+    "@walletconnect/web3-provider": "^1.7.8",
+    "authereum": "^0.1.14",
+    "fortmatic": "^2.2.1",
+    "install": "^0.13.0",
+    "nprogress": "^0.2.0",
+    "postcss": "^8.4.12",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-player": "^2.10.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-toastify": "^8.2.0",
+    "walletlink": "^2.5.0",
+    "web-vitals": "^1.0.1",
+    "web3": "^1.7.3",
+    "web3-utils": "^1.7.1",
+    "web3modal": "^1.9.7"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "start2": "react-scripts start",
+    "build2": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "format": "prettier --write ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@date-io/moment": "^2.10.11",
+    "autoprefixer": "^9",
+    "history": "^5.0.0",
+    "prettier": "2.5.1",
+    "prop-types": "^15.7.2",
+    "react-helmet-async": "^1.0.9",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  }
+}
