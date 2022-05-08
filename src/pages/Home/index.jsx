@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 import useWallet from "../../hooks/useWallet";
 import { ROUTES_NAMES } from "../../constants";
 import { useHistory } from "react-router-dom";
+import LoadingScreen from "../../components/LoadingScreen";
 
 function Home() {
   const {
