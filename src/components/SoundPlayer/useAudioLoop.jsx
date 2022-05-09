@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 
-const useAudioLoop = (url) => {
+const useAudioLoop = (url, muted) => {
   const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(false);
 
@@ -9,6 +9,7 @@ const useAudioLoop = (url) => {
 
   useEffect(() => {
     playing ? audio.play() : audio.pause();
+    audio.muted = muted;
     audio.loop = true;
   }, [playing]);
 

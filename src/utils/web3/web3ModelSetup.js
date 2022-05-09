@@ -23,7 +23,7 @@ const walletLinkProvider = walletLink.makeWeb3Provider(
 const web3ModalSetup = () =>
   new Web3Modal({
     network: "mainnet", // Optional. If using WalletConnect on xDai, change network to "xdai" and add RPC info below for xDai chain.
-    cacheProvider: true, // optional
+    cacheProvider: false, // optional
     theme: "light", // optional. Change to "dark" for a dark theme.
     providerOptions: {
       walletconnect: {

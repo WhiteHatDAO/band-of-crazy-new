@@ -45,7 +45,7 @@ export const mintClubNft = async (
     from: account,
     data: data,
     chainId: chainId,
-    value: (Number(salePrice) * Number(amount)).toString(16),
+    value: "0x" + (Number(salePrice) * Number(amount)).toString(16),
   };
 
   return provider.request({

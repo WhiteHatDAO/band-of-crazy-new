@@ -20,28 +20,32 @@ const MobileHome = () => {
 
   return (
     <div
-      className="md:hidden px-4 flex flex-col items-center text-center space-y-4"
+      className="md:hidden px-4 flex flex-col items-center text-center space-y-3"
       style={{
         background: "linear-gradient(180deg, #FFFFFF 0%, #757FF0 100%)",
-        minHeight: "90vh",
+        minHeight: "93vh",
       }}
     >
-      <div className="text-4xl font-black text-primary font-fatfrank">
+      <div
+        className="text-4xl font-black text-primary font-fatfrank"
+        style={{
+          "font-kerning": "normal",
+          letterSpacing: "-1px",
+        }}
+      >
         You’ve made it.
       </div>
-      <div className="text-xl text-black font-helvetica font-medium">
-        Well, Almost.
-      </div>
+      <div className="text-xl text-black font-helvetica">Well, Almost.</div>
       <img src={ask_cover} alt="question mark" width={130} />
-      <div className="text-xl text-black px-8 pb-5 font-helvetica font-medium">
+      <div className="text-xl text-black px-8 pb-5 font-helvetica">
         We recommend you Mint on a laptop or desktop for the best experience.
         <br />
-        <div style={{ minHeight: 16 }} />
+        <div style={{ minHeight: 10 }} />
         But hey, if you insist, Give it a try. <br />
-        <div style={{ minHeight: 16 }} />
+        <div style={{ minHeight: 10 }} />
         We just gotta check your wallet to make sure you are who you say you
         are. <br />
-        <div style={{ minHeight: 16 }} />
+        <div style={{ minHeight: 10 }} />
         Then we’ll go for a little walk.
       </div>
       {

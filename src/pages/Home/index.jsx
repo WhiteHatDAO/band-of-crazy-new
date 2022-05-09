@@ -8,9 +8,10 @@ import Header from "../../components/Header";
 import useWallet from "../../hooks/useWallet";
 import { ROUTES_NAMES } from "../../constants";
 import { useHistory } from "react-router-dom";
-import LoadingScreen from "../../components/LoadingScreen";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 function Home() {
+  //return <LoadingScreen />
   const {
     connected,
     account,
@@ -22,6 +23,7 @@ function Home() {
     disconnect,
   } = useWallet();
   const history = useHistory();
+  const isMobile = useMediaQuery("(max-width: 800px)");
 
   const { visited, homeVisited } = useHome();
 
@@ -37,7 +39,7 @@ function Home() {
         className="px-4 hidden md:flex flex-col items-center justify-center text-center"
         style={{
           background: "linear-gradient(180deg, #FFFFFF 0%, #EE9067 100%)",
-          height: "90vh",
+          height: isMobile ? "93vh" : "90vh",
         }}
       >
         <div
@@ -52,7 +54,7 @@ function Home() {
           <img
             src={home_cover}
             alt="home cover"
-            style={{ maxHeight: "90vh" }}
+            style={{ maxHeight: "90vh", maxWidth: "50%" }}
           />
           <div
             className="flex flex-col items-center space-y-10"

@@ -42,7 +42,7 @@ export const WalletProvider = ({ children }) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(performance.now()), 10000);
+    const interval = setInterval(() => setTime(performance.now()), 1000);
     return () => {
       clearInterval(interval);
     };
@@ -61,23 +61,32 @@ export const WalletProvider = ({ children }) => {
 
   useEffect(() => {
     if (provider) {
+      console.log("subscrubing");
       // Subscribe to accounts change
       provider.currentProvider.on("accountsChanged", (accounts) => {
+        console.log("account changed ?");
+        console.log(accounts);
         if (!isMounted) return;
+        console.log("account changed yes");
         setAccount(accounts[0]);
       });
 
       // Subscribe to chainId change
       provider.currentProvider.on("chainChanged", (chainIdArg) => {
+        console.log("chainIdArg changed ?");
         if (!isMounted) return;
         if (Number(chainIdArg) != chainId) setWrongNet(true);
         else setWrongNet(false);
+        console.log("chainIdArg changed ?");
       });
 
       // Subscribe to provider connection
       provider.currentProvider.on("connect", ({ chainId }) => {
+        console.log("chainId changed ?");
+
         if (!isMounted) return;
         setConnected(true);
+        console.log("chainId changed ?");
       });
 
       // Subscribe to provider disconnection

@@ -3,8 +3,15 @@ import NProgress from "nprogress";
 import loadingImg from "../assets/loading.gif";
 import logo from "../assets/logo.png";
 import useMediaQuery from "../hooks/useMediaQuery";
+import ProgressBar from "@ramonak/react-progress-bar";
 
-const LoadingScreen = ({ transparent = true }) => {
+const LoadingScreen = ({
+  transparent = true,
+  showProgress,
+  progress,
+  totalProgress,
+  ...rest
+}) => {
   const isMobile = useMediaQuery("(max-width: 800px)");
   useEffect(() => {
     NProgress.start();
@@ -17,7 +24,7 @@ const LoadingScreen = ({ transparent = true }) => {
   return (
     <div
       style={{
-        with: "100%",
+        with: "100vw",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -38,7 +45,12 @@ const LoadingScreen = ({ transparent = true }) => {
             "invert(0%) sepia(93%) saturate(0%) hue-rotate(283deg) brightness(0%) contrast(103%)",
         }}
       />
-      <h3>Loading resources...</h3>
+      {showProgress && (
+        <h3>
+          Loading resources...{" "}
+          {showProgress && `( ${progress}/${totalProgress} )`}
+        </h3>
+      )}
     </div>
   );
 };

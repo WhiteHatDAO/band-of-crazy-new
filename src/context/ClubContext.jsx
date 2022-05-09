@@ -17,6 +17,7 @@ const ClubContext = createContext({
   presalePrice: null,
   isWhitelisted: async (address) => {},
   mint: (amount) => {},
+  getSalePrice: async () => {},
 });
 
 export const ClubProvider = ({ children }) => {
@@ -64,20 +65,21 @@ export const ClubProvider = ({ children }) => {
     initIsWhitelisted();
   }, [wallet.account]);
 
-  const getSalePrice = () => {
+  const getSalePrice = async () => {
     if (readContract) {
-      getClubSalePrice(readContract, wallet.provider).then((price) => {
-        if (isMounted) {
-          setSalePrice(price);
-        }
-      });
+      const saleP = await getClubSalePrice(readContract, wallet.provider);
+      if (isMounted) {
+        setSalePrice(saleP);
+      }
+      return saleP;
+    } else {
     }
   };
 
   const mint = async (amount) => {
-    console.log("salePrice = " + salePrice);
-    console.log("nativeBalance = " + wallet.nativeBalance);
-    const neededBalance = amount * salePrice;
+    let saleP = salePrice;
+    if (isNaN(saleP)) saleP = await getSalePrice();
+    const neededBalance = amount * saleP;
     if (Number(neededBalance) >= wallet.nativeBalance) {
       toast.error("insufficient balance 😲");
       return false;
@@ -85,9 +87,9 @@ export const ClubProvider = ({ children }) => {
     const tx = mintClubNft(
       writeContract,
       wallet.provider,
-      wallet.account,
+      (await wallet.provider.eth.getAccounts())[0],
       amount,
-      salePrice
+      saleP
     );
     return await handleTransactionPromise(
       tx,
@@ -119,6 +121,7 @@ export const ClubProvider = ({ children }) => {
         writeContract,
         salePrice,
         mint,
+        getSalePrice,
         isWhitelisted,
       }}
     >
@@ -155,7 +158,7 @@ export const handleTransactionPromise = async (
       if (toast) {
         toast.success(successMessage + " 👌");
       }
-      return true;
+      return tx;
     } else {
       // transaction mined and did revert
       if (toast) {

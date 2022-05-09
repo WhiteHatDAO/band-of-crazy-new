@@ -10,30 +10,18 @@ export default function Header({ hasMintPass, transparent }) {
       className={`px-4 md:px-20 flex flex-row items-center justify-between ${
         transparent ? "bg-transparent" : "bg-white"
       }`}
-      style={{ height: "10vh" }}
+      style={{ height: isMobile ? "7vh" : "10vh" }}
     >
       <img
         src={logo}
         alt="logo"
-        height={42}
         style={{
-          height: isMobile ? 26 : 42,
+          height: isMobile ? 20 : 42,
           filter: transparent
             ? "invert(100%) sepia(93%) saturate(0%) hue-rotate(201deg) brightness(156%) contrast(106%)"
             : "none",
         }}
       />
-      {hasMintPass ? (
-        <div
-          className={`text-sm sm:text-xl md:text-lg lg:text-3xl ${
-            transparent ? "text-white" : "text-primary"
-          } font-bold text-right`}
-        >
-          WHITELIST MINT PASS
-        </div>
-      ) : (
-        <></>
-      )}
     </div>
   );
 }

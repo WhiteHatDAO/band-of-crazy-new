@@ -9,47 +9,50 @@ import useHome from "../../hooks/useHome";
 import Header from "../../components/Header";
 import { useHistory } from "react-router-dom";
 
-import c1m from "../../assets/videos/c1_m_42.mp4";
-import c1d from "../../assets/videos/c1_d_42.mp4";
-import cLoop from "../../assets/videos/c1_audio_loop.mp4";
-import c21Loop from "../../assets/videos/c1_audio_loop.mp4";
-import c1td from "../../assets/videos/c1_d_42.webp";
-import c1tm from "../../assets/videos/c1_m_42.webp";
+import c1m from "../../assets/videos-low/c1_m_42.webm";
+import c1d from "../../assets/videos-low/c1_d_42.webm";
+import cLoop from "../../assets/videos-low/c1_audio_loop.mp3";
+import c21Loop from "../../assets/videos-low/c1_audio_loop.mp3";
+import c1td from "../../assets/videos-low/c1_d_42.webp";
+import c1tm from "../../assets/videos-low/c1_m_42.webp";
 
-import c21m from "../../assets/videos/c21_m_19.mov";
-import c21d from "../../assets/videos/c21_d_19.mp4";
-import c21td from "../../assets/videos/c21_d_19.webp";
-import c21tm from "../../assets/videos/c21_m_19.webp";
+import c21m from "../../assets/videos-low/c21_m_19.webm";
+import c21d from "../../assets/videos-low/c21_d_19.webm";
+import c21td from "../../assets/videos-low/c21_d_19.webp";
+import c21tm from "../../assets/videos-low/c21_m_19.webp";
 
-import c22m from "../../assets/videos/c22_m_19.mp4";
-import c22d from "../../assets/videos/c22_d_19.mp4";
-import c22Loop from "../../assets/videos/c3_loop.mp4";
-import c31Loop from "../../assets/videos/c3_loop.mp4";
-import c32Loop from "../../assets/videos/c3_loop.mp4";
-import c4Loop from "../../assets/videos/c3_loop.mp4";
-import c22td from "../../assets/videos/c22_d_19.webp";
-import c22tm from "../../assets/videos/c22_m_19.webp";
+import c22m from "../../assets/videos-low/c22_m_19.webm";
+import c22d from "../../assets/videos-low/c22_d_19.webm";
+import c22Loop from "../../assets/videos-low/c3_loop.mp3";
+import c31Loop from "../../assets/videos-low/c3_loop.mp3";
+import c32Loop from "../../assets/videos-low/c3_loop.mp3";
+import c4Loop from "../../assets/videos-low/c3_loop.mp3";
+import c22td from "../../assets/videos-low/c22_d_19.webp";
+import c22tm from "../../assets/videos-low/c22_m_19.webp";
 
-import c31m from "../../assets/videos/c31_m_22.mp4";
-import c31d from "../../assets/videos/c31_d_22.mp4";
-import c31td from "../../assets/videos/c31_d_22.webp";
-import c31tm from "../../assets/videos/c31_m_22.webp";
+import c31m from "../../assets/videos-low/c31_m_22.webm";
+import c31d from "../../assets/videos-low/c31_d_22.webm";
+import c31td from "../../assets/videos-low/c31_d_22.webp";
+import c31tm from "../../assets/videos-low/c31_m_22.webp";
 
-import c32m from "../../assets/videos/c32_m_7.mp4";
-import c32d from "../../assets/videos/c32_d_7.mp4";
-import c32td from "../../assets/videos/c32_d_7.webp";
-import c32tm from "../../assets/videos/c32_m_7.webp";
+import c32m from "../../assets/videos-low/c32_m_7.webm";
+import c32d from "../../assets/videos-low/c32_d_7.webm";
+import c32td from "../../assets/videos-low/c32_d_7.webp";
+import c32tm from "../../assets/videos-low/c32_m_7.webp";
 
-import c4m from "../../assets/videos/c4_m_14.mp4";
-import c4d from "../../assets/videos/c4_d_14.mp4";
-import c4td from "../../assets/videos/c4_d_14.webp";
-import c4tm from "../../assets/videos/c4_m_14.webp";
+import c4m from "../../assets/videos-low/c4_m_14.webm";
+import c4d from "../../assets/videos-low/c4_d_14.webm";
+import c4td from "../../assets/videos-low/c4_d_14.webp";
+import c4tm from "../../assets/videos-low/c4_m_14.webp";
 import useAudioLoop from "../../components/SoundPlayer/useAudioLoop";
 import Page from "../../components/Page";
 import { ROUTES_NAMES } from "../../constants";
 import Redirect from "react-router-dom";
 import useClub from "../../hooks/useClub";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import HomeButton from "../../components/buttons/HomeButton";
+import { VideoLoader } from "./VideoLoader";
+import { PayContainer } from "./PayContainer";
 
 const BUTTON_WITH = "20%";
 
@@ -112,6 +115,7 @@ function Minting() {
 
   const { visited } = useHome();
 
+  const [loaded, setLoaded] = useState(false);
   const [videoControl, setVideoControl] = useState(false);
   const [showButtons1, setShowButtons1] = useState(false);
   const [showButtons2, setShowButtons2] = useState(false);
@@ -119,6 +123,7 @@ function Minting() {
   const [chapter, setChapter] = useState(1);
   const [muted, setmuted] = useState(false);
   const [thumb, setThumb] = useState(1);
+  const [tx, seTx] = useState("");
 
   useEffect(() => {
     if (!visited) history.push(ROUTES_NAMES.HOME);
@@ -191,7 +196,7 @@ function Minting() {
       bgLoop2.setPlay(true);
     }
     console.log("state ", state);
-    if (state.playedSeconds >= 6) {
+    if (state.playedSeconds >= 1) {
       setShowMintButton(true);
     }
     if (state.playedSeconds >= 7) {
@@ -207,6 +212,8 @@ function Minting() {
     setShowMintButton(false);
     club.mint(1).then((success) => {
       if (success) {
+        console.log(JSON.stringify(success));
+        seTx(success);
         setChapter(4);
         setVideoControl(true);
       } else {
@@ -267,7 +274,7 @@ function Minting() {
     setVideoControl(true);
   };
 
-  const player = (obj, onProgress) => {
+  const player = (obj, onProgress, play) => {
     return (
       <ReactPlayer
         url={!isMobile ? obj.desktop : obj.mobile}
@@ -280,6 +287,8 @@ function Minting() {
         onProgress={onProgress}
         onError={onError}
         onDuration={onDurationChange}
+        onBufferEnd={(e) => console.log("onBufferEnd" + JSON.stringify(e))}
+        onBuffer={(e) => console.log("onBufferEnd" + JSON.stringify(e))}
         config={{
           file: {
             attributes: {
@@ -291,7 +300,7 @@ function Minting() {
     );
   };
 
-  const ButtonContainer = ({ children }) => {
+  const ButtonContainer = ({ children, ...rest }) => {
     return (
       <div
         style={{
@@ -317,215 +326,227 @@ function Minting() {
 
   return (
     <Page title={"Minting"}>
-      <div className="flex flex-col">
-        <Header hasMintPass={true} transparent />
-        <div className={"thumbnail-container"}>
-          <img
-            className={"thumbnail"}
-            src={
-              thumb === 1
-                ? !isMobile
-                  ? videos.chapter1.thumbDesktop
-                  : videos.chapter1.thumbMobile
-                : thumb === 2
-                ? !isMobile
-                  ? videos.chapter2_2.thumbDesktop
-                  : videos.chapter2_2.thumbMobile
-                : thumb === 2.5
-                ? !isMobile
-                  ? videos.chapter2_1.thumbDesktop
-                  : videos.chapter2_1.thumbMobile
-                : thumb === 3
-                ? !isMobile
-                  ? videos.chapter3_1.thumbDesktop
-                  : videos.chapter3_1.thumbMobile
-                : thumb === 3.5
-                ? !isMobile
-                  ? videos.chapter3_2.thumbDesktop
-                  : videos.chapter3_2.thumbMobile
-                : thumb === 4
-                ? !isMobile
-                  ? videos.chapter4.thumbDesktop
-                  : videos.chapter4.thumbMobile
-                : ""
-            }
-          />
-          {chapter === 1 ? (
-            <div className="video-container">
-              {player(videos.chapter1, onProgressChange1)}
-              {showButtons1 && (
-                <ButtonContainer>
-                  <img
-                    width={!isMobile ? BUTTON_WITH : "70%"}
-                    src={giveItAKick}
-                    alt="give it a kick"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      kickIt();
-                      setShowButtons1(false);
+      {!loaded ? (
+        <VideoLoader callback={setLoaded} />
+      ) : (
+        <div className="flex flex-col">
+          <Header hasMintPass={true} transparent />
+          <div className={"thumbnail-container"}>
+            <img
+              className={"thumbnail"}
+              src={
+                thumb === 1
+                  ? !isMobile
+                    ? videos.chapter1.thumbDesktop
+                    : videos.chapter1.thumbMobile
+                  : thumb === 2
+                  ? !isMobile
+                    ? videos.chapter2_2.thumbDesktop
+                    : videos.chapter2_2.thumbMobile
+                  : thumb === 2.5
+                  ? !isMobile
+                    ? videos.chapter2_1.thumbDesktop
+                    : videos.chapter2_1.thumbMobile
+                  : thumb === 3
+                  ? !isMobile
+                    ? videos.chapter3_1.thumbDesktop
+                    : videos.chapter3_1.thumbMobile
+                  : thumb === 3.5
+                  ? !isMobile
+                    ? videos.chapter3_2.thumbDesktop
+                    : videos.chapter3_2.thumbMobile
+                  : thumb === 4
+                  ? !isMobile
+                    ? videos.chapter4.thumbDesktop
+                    : videos.chapter4.thumbMobile
+                  : ""
+              }
+            />
+            {chapter === 1 ? (
+              <div className="video-container">
+                {player(videos.chapter1, onProgressChange1)}
+                {showButtons1 && (
+                  <ButtonContainer>
+                    <img
+                      width={!isMobile ? BUTTON_WITH : "60%"}
+                      src={giveItAKick}
+                      alt="give it a kick"
+                      className="cursor-pointer"
+                      onClick={() => {
+                        kickIt();
+                        setShowButtons1(false);
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: isMobile ? "block" : "none",
+                        minHeight: 16,
+                      }}
+                    />
+                    <img
+                      width={!isMobile ? BUTTON_WITH : "60%"}
+                      src={tryPushingButtons}
+                      alt="try pushing"
+                      className="cursor-pointer"
+                      onClick={() => {
+                        pushButtons();
+                        setShowButtons1(false);
+                      }}
+                    />
+                  </ButtonContainer>
+                )}
+              </div>
+            ) : chapter === 2.5 ? (
+              <div className="video-container">
+                {player(videos.chapter2_1, onProgressChange2)}
+                {showButtons2 ? (
+                  <ButtonContainer>
+                    <img
+                      width={!isMobile ? BUTTON_WITH : "60%"}
+                      src={payForPartyPack}
+                      alt="git it"
+                      className="cursor-pointer"
+                      onClick={() => {
+                        payForPack();
+                        setVideoControl(true);
+                        setShowButtons2(false);
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: isMobile ? "block" : "none",
+                        minHeight: 16,
+                      }}
+                    />
+                    <img
+                      width={!isMobile ? BUTTON_WITH : "60%"}
+                      src={rockTheMachine}
+                      alt="try pushing"
+                      className="cursor-pointer"
+                      onClick={() => {
+                        rockMachine();
+                        setVideoControl(true);
+                        setShowButtons2(false);
+                      }}
+                    />
+                  </ButtonContainer>
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : chapter === 2 ? (
+              <div className="video-container">
+                {player(videos.chapter2_2, onProgressChange25)}
+                {showButtons2 ? (
+                  <ButtonContainer>
+                    <img
+                      width={!isMobile ? BUTTON_WITH : "60%"}
+                      src={payForPartyPack}
+                      alt="pay for pack"
+                      className="cursor-pointer"
+                      onClick={() => {
+                        payForPack();
+                        setVideoControl(true);
+                        setShowButtons2(false);
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: isMobile ? "block" : "none",
+                        minHeight: 16,
+                      }}
+                    />
+                    <img
+                      width={!isMobile ? BUTTON_WITH : "60%"}
+                      src={rockTheMachine}
+                      alt="rock machine"
+                      className="cursor-pointer"
+                      onClick={() => {
+                        rockMachine();
+                        setVideoControl(true);
+                        setShowButtons2(false);
+                      }}
+                    />
+                  </ButtonContainer>
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : chapter === 3 ? (
+              <div className="video-container">
+                {player(videos.chapter3_1, onProgressChange3)}
+                {showMintButton ? (
+                  <div
+                    style={{
+                      position: "absolute",
+                      height: "100vh",
+                      width: "100vw",
+                      top: 0,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                    }}
+                  >
+                    <img
+                      src={payForGas}
+                      alt="pay money for gas"
+                      //width={350}
+                      style={{
+                        marginTop: "auto",
+                        margin: "auto",
+                        width: isMobile ? "75%" : "400px",
+                      }}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        handleMintTx();
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : chapter === 3.5 ? (
+              <div className="video-container">
+                {player(videos.chapter3_2, onProgressChange35)}
+                {showMintButton ? (
+                  <PayContainer onClick={handleMintTx} />
+                ) : (
+                  <></>
+                )}
+              </div>
+            ) : chapter === 4 ? (
+              <div className="video-container">
+                {player(videos.chapter4, onProgressChange5)}
+                <ButtonContainer style={{ justifyContent: "center" }}>
+                  <div
+                    style={{
+                      display: isMobile ? "none" : "block",
                     }}
                   />
                   <div
                     style={{
                       display: isMobile ? "block" : "none",
-                      minHeight: 32,
+                      minHeight: 48,
                     }}
                   />
-                  <img
-                    width={!isMobile ? BUTTON_WITH : "70%"}
-                    src={tryPushingButtons}
-                    alt="try pushing"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      pushButtons();
-                      setShowButtons1(false);
-                    }}
-                  />
+                  <a
+                    className="transition-all duration-500 home-button rounded-xl bg-blue text-white md:text-2xl sm:text-4xl sm:px-12  sm:py-6 md:py-3 md:px-12 cursor-pointer font-helvetica hover:bg-blueHover"
+                    href={"https://rinkeby.etherscan.io/tx/" + tx}
+                    target={"_blank"}
+                  >
+                    {" "}
+                    See on Etherscan
+                  </a>
                 </ButtonContainer>
-              )}
-            </div>
-          ) : chapter === 2.5 ? (
-            <div className="video-container">
-              {player(videos.chapter2_1, onProgressChange2)}
-              {showButtons2 ? (
-                <ButtonContainer>
-                  <img
-                    width={!isMobile ? BUTTON_WITH : "70%"}
-                    src={payForPartyPack}
-                    alt="git it"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      payForPack();
-                      setVideoControl(true);
-                      setShowButtons2(false);
-                    }}
-                  />
-                  <div
-                    style={{
-                      display: isMobile ? "block" : "none",
-                      minHeight: 32,
-                    }}
-                  />
-                  <img
-                    width={!isMobile ? BUTTON_WITH : "70%"}
-                    src={rockTheMachine}
-                    alt="try pushing"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      rockMachine();
-                      setVideoControl(true);
-                      setShowButtons2(false);
-                    }}
-                  />
-                </ButtonContainer>
-              ) : (
-                <></>
-              )}
-            </div>
-          ) : chapter === 2 ? (
-            <div className="video-container">
-              {player(videos.chapter2_2, onProgressChange25)}
-              {showButtons2 ? (
-                <ButtonContainer>
-                  <img
-                    width={!isMobile ? BUTTON_WITH : "70%"}
-                    src={payForPartyPack}
-                    alt="pay for pack"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      payForPack();
-                      setVideoControl(true);
-                      setShowButtons2(false);
-                    }}
-                  />
-                  <div
-                    style={{
-                      display: isMobile ? "block" : "none",
-                      minHeight: 32,
-                    }}
-                  />
-                  <img
-                    width={!isMobile ? BUTTON_WITH : "70%"}
-                    src={rockTheMachine}
-                    alt="rock machine"
-                    className="cursor-pointer"
-                    onClick={() => {
-                      rockMachine();
-                      setVideoControl(true);
-                      setShowButtons2(false);
-                    }}
-                  />
-                </ButtonContainer>
-              ) : (
-                <></>
-              )}
-            </div>
-          ) : chapter === 3 ? (
-            <div className="video-container">
-              {player(videos.chapter3_1, onProgressChange3)}
-              {showMintButton ? (
-                <div
-                  style={{
-                    position: "absolute",
-                    height: "100vh",
-                    width: "100vw",
-                    top: 0,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
-                  <img
-                    src={payForGas}
-                    alt="pay money for gas"
-                    //width={350}
-                    style={{
-                      marginTop: "auto",
-                      margin: "auto",
-                      width: isMobile ? "75%" : "400px",
-                    }}
-                    className="cursor-pointer"
-                    onClick={() => {
-                      handleMintTx();
-                    }}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-          ) : chapter === 3.5 ? (
-            <div className="video-container">
-              {player(videos.chapter3_2, onProgressChange35)}
-              {showMintButton ? (
-                <>
-                  <img
-                    width={150}
-                    height={50}
-                    src={payForGas}
-                    alt="try pushing"
-                    className="video-container"
-                    onClick={() => {
-                      setVideoControl(true);
-                      setShowMintButton(false);
-                      handleMintTx();
-                    }}
-                  />
-                </>
-              ) : (
-                <></>
-              )}
-            </div>
-          ) : chapter === 4 ? (
-            <div className="video-container">
-              {player(videos.chapter4, onProgressChange5)}
-            </div>
-          ) : (
-            <></>
-          )}
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </Page>
   );
 }

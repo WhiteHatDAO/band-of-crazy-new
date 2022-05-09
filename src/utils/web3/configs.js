@@ -7,6 +7,7 @@ const testNetConfigs = {
   NetworkName: "Rinkeby", // network name
   rpcUrl: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161", // RPC url
   explorer: "https://rinkeby.etherscan.io/", // block explorer
+  opensea: "https://testnets.opensea.io/assets/rinkeby/",
 
   // project info
   clubNFT: "0x161cD38c680708AeB310BfB7788435d5D8DfF25d", // put band of crazy contract here,
